@@ -5,13 +5,16 @@ using Microsoft. EntityFrameworkCore;
 using testeef.Data;
 using testeef.Models;
 
-namespace testeef.Controllers {
+namespace testeef.Controllers
+{
 
     [ApiController]
     [Route("v1/categories")]
 
-    public class CategoryController : ControllerBase{
+    public class CategoryController : ControllerBase
+    {
 
+        /* Retorna todas as Categorias Cadastradas */
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<List<Category>>> Get([FromServices] DataContext context )
@@ -20,13 +23,26 @@ namespace testeef.Controllers {
             return categories;
         }
 
+        /* Retorna a Categoria Filtrada */
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<Category>> GetByID([FromServices] DataContext context, int id)
+        {
+            var category = await context.Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync( x => x.id == id );
+            return category;
+        }
+
+        /* Cadastra uma categoria */
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<Category>> Post(
             [FromServices] DataContext context,
             [FromBody] Category model    )
         {
-            if (ModelState.IsValid){
+            if (ModelState.IsValid)
+            {
                 context.Categories.Add(model);
                 await context.SaveChangesAsync();
                 return model;

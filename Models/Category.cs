@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace testeef.Models{
-    public class Category {
+namespace testeef.Models
+{
+    public class Category
+    {
         [Key]
         public int id {get; set;}
 

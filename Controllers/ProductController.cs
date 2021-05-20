@@ -12,6 +12,7 @@ namespace testeef.Controllers
     [Route("v1/products")]
     public class ProductController : ControllerBase 
     {
+        /* Retorna todas os produtos */
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
@@ -20,6 +21,7 @@ namespace testeef.Controllers
             return products;
         }
 
+        /* Retorna o produto filtrado */
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ActionResult<Product>> GetByID([FromServices] DataContext context, int id)
@@ -30,6 +32,7 @@ namespace testeef.Controllers
             return product;
         }
 
+        /* Retorna os produtos vinculados a categoria filtrada */
         [HttpGet]
         [Route("categories/{id:int}")]
         public async Task<ActionResult<List<Product>>> GetByCategory( [FromServices] DataContext context, int id )
@@ -42,21 +45,30 @@ namespace testeef.Controllers
             return products;
         }
 
+        /* Cadastra um Produto */
         [HttpPost]
         [Route("")]
         public async Task<ActionResult<Product>> Post(
             [FromServices] DataContext context,
             [FromBody] Product model )
         {
-            if (ModelState.IsValid)
+
+            if ( model.id == 2 ) 
             {
-                context.Products.Add(model);
-                await context.SaveChangesAsync();
-                return model;
+                return BadRequest("Deu Pau Brow");
             }
             else
             {
-                return BadRequest(ModelState);
+                if (ModelState.IsValid)
+                {
+                    context.Products.Add(model);
+                    await context.SaveChangesAsync();
+                    return model;
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
             }
         }
 

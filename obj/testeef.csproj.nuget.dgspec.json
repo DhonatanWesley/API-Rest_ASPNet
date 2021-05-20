@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Temp\\testeef\\testeef.csproj": {}
+    "C:\\Temp\\Projetos\\API-Rest_AST.Net\\testeef.csproj": {}
   },
   "projects": {
-    "C:\\Temp\\testeef\\testeef.csproj": {
+    "C:\\Temp\\Projetos\\API-Rest_AST.Net\\testeef.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Temp\\testeef\\testeef.csproj",
+        "projectUniqueName": "C:\\Temp\\Projetos\\API-Rest_AST.Net\\testeef.csproj",
         "projectName": "testeef",
-        "projectPath": "C:\\Temp\\testeef\\testeef.csproj",
+        "projectPath": "C:\\Temp\\Projetos\\API-Rest_AST.Net\\testeef.csproj",
         "packagesPath": "C:\\Users\\Dhonatan\\.nuget\\packages\\",
-        "outputPath": "C:\\Temp\\testeef\\obj\\",
+        "outputPath": "C:\\Temp\\Projetos\\API-Rest_AST.Net\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
