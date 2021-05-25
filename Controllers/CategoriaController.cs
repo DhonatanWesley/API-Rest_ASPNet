@@ -9,41 +9,41 @@ namespace testeef.Controllers
 {
 
     [ApiController]
-    [Route("v1/categories")]
+    [Route("v1/categorias")]
 
-    public class CategoryController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
 
         /* Retorna todas as Categorias Cadastradas */
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Category>>> Get([FromServices] DataContext context )
+        public async Task<ActionResult<List<Categoria>>> Get([FromServices] DataContext context )
         {   
-            var categories = await context.Categories.ToListAsync();
+            var categories = await context.Categorias.ToListAsync();
             return categories;
         }
 
         /* Retorna a Categoria Filtrada */
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<ActionResult<Category>> GetByID([FromServices] DataContext context, int id)
+        [Route("{codigo:int}")]
+        public async Task<ActionResult<Categoria>> GetByID([FromServices] DataContext context, int codigo)
         {
-            var category = await context.Categories
+            var category = await context.Categorias
                 .AsNoTracking()
-                .FirstOrDefaultAsync( x => x.id == id );
+                .FirstOrDefaultAsync( x => x.codigo == codigo );
             return category;
         }
 
         /* Cadastra uma categoria */
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Category>> Post(
+        public async Task<ActionResult<Categoria>> Post(
             [FromServices] DataContext context,
-            [FromBody] Category model    )
+            [FromBody] Categoria model    )
         {
             if (ModelState.IsValid)
             {
-                context.Categories.Add(model);
+                context.Categorias.Add(model);
                 await context.SaveChangesAsync();
                 return model;
             }

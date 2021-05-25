@@ -9,38 +9,41 @@ using testeef.Models;
 namespace testeef.Controllers
 {
     [ApiController]
-    [Route("v1/products")]
-    public class ProductController : ControllerBase 
+    [Route("v1/produtos")]
+    public class ProdutoController : ControllerBase 
     {
         /* Retorna todas os produtos */
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
+        public async Task<ActionResult<List<Produto>>> Get([FromServices] DataContext context)
         {
-            var products = await context.Products.Include( x => x.Category ).ToListAsync();
+            var products = await context.Produtos
+                //.Include( x => x.Categoria )
+                .ToListAsync();
             return products;
         }
 
         /* Retorna o produto filtrado */
         [HttpGet]
-        [Route("{id:int}")]
-        public async Task<ActionResult<Product>> GetByID([FromServices] DataContext context, int id)
+        [Route("{codigo:int}")]
+        public async Task<ActionResult<Produto>> GetByID([FromServices] DataContext context, int codigo)
         {
-            var product = await context.Products.Include(x => x.Category)
+            var product = await context.Produtos
+                //.Include(x => x.Categoria)
                 .AsNoTracking()
-                .FirstOrDefaultAsync( x => x.id == id );
+                .FirstOrDefaultAsync( x => x.codigo == codigo );
             return product;
         }
 
         /* Retorna os produtos vinculados a categoria filtrada */
         [HttpGet]
-        [Route("categories/{id:int}")]
-        public async Task<ActionResult<List<Product>>> GetByCategory( [FromServices] DataContext context, int id )
+        [Route("categorias/{codigo:int}")]
+        public async Task<ActionResult<List<Produto>>> GetByCategory( [FromServices] DataContext context, int codigo )
         {
-            var products = await context.Products
-                .Include(x => x.Category)
+            var products = await context.Produtos
+                //.Include(x => x.Categoria)
                 .AsNoTracking()
-                .Where(x => x.CategoryId == id)
+                .Where(x => x.CategoriaCodigo == codigo)
                 .ToListAsync();
             return products;
         }
@@ -48,12 +51,13 @@ namespace testeef.Controllers
         /* Cadastra um Produto */
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<Product>> Post(
+        public async Task<ActionResult<Produto>> Post(
             [FromServices] DataContext context,
-            [FromBody] Product model )
+            [FromBody] Produto model )
         {
 
-            if ( model.id == 2 ) 
+            /* Teste Validação Campo */
+            if ( model.codigo == 2 ) 
             {
                 return BadRequest("Deu Pau Brow");
             }
@@ -61,7 +65,7 @@ namespace testeef.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    context.Products.Add(model);
+                    context.Produtos.Add(model);
                     await context.SaveChangesAsync();
                     return model;
                 }
